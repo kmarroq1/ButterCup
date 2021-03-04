@@ -1,7 +1,9 @@
 <?php
+
 require_once 'Fields.php';
 
 class Validator {
+
     private $fields;
 
     public function __construct() {
@@ -15,11 +17,11 @@ class Validator {
     public function foundErrors() {
         return $this->fields->hasErrors();
     }
-    
+
     public function addField($name, $message = '') {
         return $this->fields->addField($name, $message);
     }
-    
+
     // Validate a generic text field
     public function checkText($name, $value,
             $required = true, $min = 1, $max = 255) {
@@ -45,6 +47,78 @@ class Validator {
         }
     }
 
+    // Validate a code field
+    public function checkCode($name, $value, $required = true) {
+        $field = $this->fields->getField($name);
+
+        // If field is not required and empty, remove errors and exit
+        if (!$required && empty($value)) {
+            $field->clearErrorMessage();
+            return;
+        }
+
+        // Call the text method and exit if it yields an error
+        $this->checkText($name, $value, $required, $min = 6, $max = 10);
+        if ($field->hasError()) {
+            return;
+        }
+
+        // Split the code at hyphen and check parts
+        $parts = explode('-', $value);
+        if (count($parts) < 2) {
+            $field->setErrorMessage('Hyphen required.');
+            return;
+        }
+        if (count($parts) > 2) {
+            $field->setErrorMessage('Only one hyphen allowed.');
+            return;
+        }
+        $letters_part = $parts[0];
+        $numerical_part = $parts[1];
+
+        // Check lengths of letters and numerical parts
+        if (strlen($letters_part) > 6 || strlen($numerical_part) > 3) {
+            $field->setErrorMessage('Must be under 6 letters and under 3 numbers.');
+            return;
+        }
+
+        // Pattern for letters part
+        $letters_pattern = '/^[:upper:]?/';
+
+        // Pattern for numerical part
+        $numerical_pattern = '/^[:digit:]?/';
+
+        // Call the pattern method and exit if it yields an error
+        $this->checkPattern($name, $letters_part, $letters_pattern,
+                'There should only be capital letters before the hyphen.');
+        if ($field->hasError()) {
+            return;
+        }
+        $this->checkPattern($name, $numerical_part, $numerical_pattern,
+                'There should only be digits after the hyphen.');
+    }
+
+    // Validate a price field
+    public function checkPrice($name, $value,
+            $required = true) {
+
+        // Get Field object
+        $field = $this->fields->getField($name);
+
+        // Call the text method and exit if it yields an error
+        $this->text($name, $value, $required);
+        if ($field->hasError()) {
+            return;
+        }
+
+        // Check field and set or clear error message
+        if (!is_numeric($value)) {
+            $field->setErrorMessage('Must be a valid number.');
+        } else {
+            $field->clearErrorMessage();
+        }
+    }
+
     // Validate a field with a generic pattern
     public function checkPattern($name, $value, $pattern, $message,
             $required = true) {
@@ -62,7 +136,7 @@ class Validator {
         $match = preg_match($pattern, $value);
         if ($match === false) {
             $field->setErrorMessage('Error testing field.');
-        } else if ( $match != 1 ) {
+        } else if ($match != 1) {
             $field->setErrorMessage($message);
         } else {
             $field->clearErrorMessage();
@@ -74,7 +148,9 @@ class Validator {
 
         // Call the text method and exit if it yields an error
         $this->checkText($name, $value, $required);
-        if ($field->hasError()) { return; }
+        if ($field->hasError()) {
+            return;
+        }
 
         // Call the pattern method to validate a phone number
         $pattern = '/^[[:digit:]]{3}-[[:digit:]]{3}-[[:digit:]]{4}$/';
@@ -93,7 +169,9 @@ class Validator {
 
         // Call the text method and exit if it yields an error
         $this->checkText($name, $value, $required);
-        if ($field->hasError()) { return; }
+        if ($field->hasError()) {
+            return;
+        }
 
         // Split email address on @ sign and check parts
         $parts = explode('@', $value);
@@ -125,7 +203,7 @@ class Validator {
 
         // Patterns for quoted text formatted local part
         $char = '([^\\\\"])';
-        $esc  = '(\\\\[\\\\"])';
+        $esc = '(\\\\[\\\\"])';
         $text = '(' . $char . '|' . $esc . ')+';
         $quoted = '(^"' . $text . '"$)';
 
@@ -135,7 +213,9 @@ class Validator {
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $local, $localPattern,
                 'Invalid username part.');
-        if ($field->hasError()) { return; }
+        if ($field->hasError()) {
+            return;
+        }
 
         // Patterns for domain part
         $hostname = '([[:alnum:]]([-[:alnum:]]{0,62}[[:alnum:]])?)';
@@ -147,5 +227,7 @@ class Validator {
         $this->checkPattern($name, $domain, $domainPattern,
                 'Invalid domain name part.');
     }
+
 }
+
 ?>
