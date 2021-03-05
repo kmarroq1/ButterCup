@@ -83,7 +83,7 @@ class Validator {
         }
 
         // Pattern for letters part
-       $pattern = '/^[[:upper:]]{3,6}-[[:digit:]]{2,3}$/';
+       $pattern = '/^[a-zA-Z]{3,6}-[[:digit:]]{2,3}$/';
 
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $value, $pattern,
@@ -114,7 +114,7 @@ class Validator {
         }
 
         // Pattern for price
-        $price_pattern = '/^\$?\s?([0-9]|\.[0-9]{1,2}|[0-9]\.[0-9]{1,2})$/';
+        $price_pattern = '/^\$?\s?([0-9]+|\.[0-9]{1,2}|[0-9]+\.[0-9]{1,2})$/';
 
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $value, $price_pattern,

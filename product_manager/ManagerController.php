@@ -112,7 +112,8 @@ class ManagerController {
             include '../view/product_manager/product_add.php';
         } else {
             $trimmed_price = ltrim($price, "$");
-            $this->product_data->add_product($category_id, $code, $name, $trimmed_price);
+            $formatted_code = strtoupper($code);
+            $this->product_data->add_product($category_id, $formatted_code, $name, $trimmed_price);
             header("Location: .?category_id=$category_id");
         }
     }
