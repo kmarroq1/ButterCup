@@ -78,24 +78,19 @@ class Validator {
         $numerical_part = $parts[1];
         // Check lengths of letters and numerical parts
         if (strlen($letters_part) > 6 || strlen($numerical_part) > 3) {
-            $field->setErrorMessage('Must be under 6 letters and under 3 numbers.');
+            $field->setErrorMessage('Must be 3-6 letters and 2-3 digits.');
             return;
         }
 
         // Pattern for letters part
-        $letters_pattern = '/^[:upper:]+$/';
-
-        // Pattern for numerical part
-        $numerical_pattern = '/^[:digit:]+$/';
+       $pattern = '/^[[:upper:]]{3,6}-[[:digit:]]{2,3}$/';
 
         // Call the pattern method and exit if it yields an error
-        $this->checkPattern($name, $letters_part, $letters_pattern,
-                'There should only be capital letters before the hyphen.');
+        $this->checkPattern($name, $value, $pattern,
+                'Invalid product code.');
         if ($field->hasError()) {
             return;
         }
-        $this->checkPattern($name, $numerical_part, $numerical_pattern,
-                'There should only be digits after the hyphen.');
     }
 
     // Validate a price field
@@ -106,7 +101,7 @@ class Validator {
         $field = $this->fields->getField($name);
 
         // Call the text method and exit if it yields an error
-        $this->text($name, $value, $required);
+        $this->checkText($name, $value, $required);
         if ($field->hasError()) {
             return;
         }
@@ -119,7 +114,7 @@ class Validator {
         }
 
         // Pattern for price
-        $price_pattern = '/^$?[0-9]+(\.[0-9]{1,2})?$/';
+        $price_pattern = '/^\$?[0-9]+(\.[0-9]{1,2})?$/';
 
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $value, $price_pattern,
