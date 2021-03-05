@@ -15,11 +15,11 @@ class ManagerController {
         $this->db = new GuitarShopDB();
 
         // Instantiate validator and add fields
-        $this->validate = new Validate();
-        $this->fields = $this->validate->getFields();
-        $this->fields->addField('code');
-        $this->fields->addField('name');
-        $this->fields->addField('price', 'Must be a valid number.');
+        $this->validate = new Validator();
+        $fields = $this->validate->getFields();
+        $fields->addField('code');
+        $fields->addField('name');
+        $fields->addField('price', 'Must be a valid number.');
 
         if ($this->db->isConnected()) {
             $this->category_data = new CategoryData($this->db);
@@ -84,7 +84,11 @@ class ManagerController {
     }
 
     private function processShowAddForm() {
+        $code = '';
+        $name = '';
+        $price = '';
         $categories = $this->category_data->get_categories();
+        $fields = $this->validate->getFields();
         include '../view/product_manager/product_add.php';
     }
 
@@ -96,14 +100,14 @@ class ManagerController {
 
         // Validate form data
         $this->validate->checkCode('code', $code, true, 1, 10);
-        $this->validate->text('name', $name, true, 3, 50);
+        $this->validate->checkText('name', $name, true, 3, 50);
         $this->validate->checkPrice('price', $price);
 
-        if ($category_id == NULL || $category_id == FALSE || $code == NULL ||
-                $name == NULL || $price == NULL || $price == FALSE) {
+        if ($category_id == NULL || $category_id == FALSE) {
             $error = "Invalid product data. Check all fields and try again.";
             include '../view/errors/error.php';
-        } else if ($this->fields->hasErrors()) {
+        } else if ($this->validate->foundErrors()) {
+            $fields = $this->validate->getFields();
             $this->processShowAddForm();
         } else {
             $this->product_data->add_product($category_id, $code, $name, $price);
