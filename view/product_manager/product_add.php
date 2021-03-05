@@ -16,19 +16,19 @@
 
         <label>Code:</label>
         <input type="input" name="code" 
-               value="<?php echo htmlspecialchars($code); ?>">
+               value="<?php echo htmlspecialchars(trim(strtoupper($code))); ?>">
                <?php echo $fields->getField('code')->getHTML(); ?>
         <br>
 
         <label>Name:</label>
         <input type="input" name="name"
-               value="<?php echo htmlspecialchars($name); ?>">
+               value="<?php echo htmlspecialchars(trim($name)); ?>">
                <?php echo $fields->getField('name')->getHTML(); ?>
         <br>
 
         <label>List Price:</label>
         <input type="input" name="price"
-               value="<?php echo htmlspecialchars($price); ?>">
+               value="<?php echo htmlspecialchars(trim($price)); ?>">
                <?php echo $fields->getField('price')->getHTML(); ?>
         <br>
 
