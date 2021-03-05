@@ -6,24 +6,30 @@
 
         <label>Category:</label>
         <select name="category_id">
-        <?php foreach ( $categories as $category ) : ?>
-            <option value="<?php echo $category['categoryID']; ?>">
-                <?php echo $category['categoryName']; ?>
-            </option>
-        <?php endforeach; ?>
+            <?php foreach ($categories as $category) : ?>
+                <option value="<?php echo $category['categoryID']; ?>">
+                    <?php echo $category['categoryName']; ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <br>
 
         <label>Code:</label>
-        <input type="text" name="code" />
+        <input type="input" name="code" 
+               value="<?php echo htmlspecialchars($code); ?>">
+               <?php echo $fields->getField('code')->getHTML(); ?>
         <br>
 
         <label>Name:</label>
-        <input type="text" name="name" />
+        <input type="input" name="name"
+               value="<?php echo htmlspecialchars($name); ?>">
+               <?php echo $fields->getField('name')->getHTML(); ?>
         <br>
 
         <label>List Price:</label>
-        <input type="text" name="price" />
+        <input type="input" name="price"
+               value="<?php echo htmlspecialchars($price); ?>">
+               <?php echo $fields->getField('price')->getHTML(); ?>
         <br>
 
         <label>&nbsp;</label>
