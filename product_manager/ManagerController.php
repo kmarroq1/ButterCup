@@ -19,7 +19,7 @@ class ManagerController {
         $fields = $this->validate->getFields();
         $fields->addField('code');
         $fields->addField('name');
-        $fields->addField('price', 'Must be a valid number.');
+        $fields->addField('price');
 
         if ($this->db->isConnected()) {
             $this->category_data = new CategoryData($this->db);
