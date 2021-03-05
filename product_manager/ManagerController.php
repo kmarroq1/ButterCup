@@ -108,7 +108,8 @@ class ManagerController {
             include '../view/errors/error.php';
         } else if ($this->validate->foundErrors()) {
             $fields = $this->validate->getFields();
-            $this->processShowAddForm();
+            $categories = $this->category_data->get_categories();
+            include '../view/product_manager/product_add.php';
         } else {
             $this->product_data->add_product($category_id, $code, $name, $price);
             header("Location: .?category_id=$category_id");
