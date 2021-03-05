@@ -114,7 +114,7 @@ class Validator {
         }
 
         // Pattern for price
-        $price_pattern = '/^\$?[0-9]+(\.[0-9]{1,2})?$/';
+        $price_pattern = '/^\$?\s?([0-9]|\.[0-9]{1,2}|[0-9]\.[0-9]{1,2})$/';
 
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $value, $price_pattern,
