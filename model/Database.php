@@ -1,5 +1,5 @@
 <?php
-class GuitarShopDB {
+class ButtercupDB {
     private $db;
     private $error_message;
     
@@ -7,7 +7,7 @@ class GuitarShopDB {
      * connect to the database
      */
     public function __construct() {
-        $dsn = 'mysql:host=localhost;dbname=butterCup';
+        $dsn = 'mysql:host=localhost;dbname=buttercup';
         $username = 'mgs_user';
         $password = 'pa55word';
         $this->error_message = '';

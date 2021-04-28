@@ -42,14 +42,17 @@ class Controller {
             case 'Logout':
                 $this->processLogout();
                 break;
-            case 'Add Task':
-                $this->processAddTask();
+            case 'Show Products':
+                $this->processShowProducts();
                 break;
-            case 'Delete Task':
-                $this->processDeleteTask();
+            case 'FAQ':
+                $this->processShowFAQ();
                 break;
-            case 'Show Tasks':
-                $this->processShowTasks();
+            case 'Services':
+                $this->processShowServices();
+                break;
+            case 'Build':
+                $this->processShowBuild();
                 break;
             case 'Home':
                 $this->processShowHomePage();
@@ -111,6 +114,21 @@ class Controller {
         echo $template->render();
     }
 
+    private function processShowFAQ() {
+        $template = $this->twig->load('faq.twig');
+        echo $template->render();
+    }
+
+    private function processShowServices() {
+        $template = $this->twig->load('services.twig');
+        echo $template->render();
+    }
+
+    private function processShowBuild() {
+        $template = $this->twig->load('build.twig');
+        echo $template->render();
+    }
+
     private function processLogout() {
         $_SESSION = array();   // Clear all session data from memory
         session_destroy();     // Clean up the session ID
@@ -118,7 +136,7 @@ class Controller {
         echo $template->render(['login_message' => 'You have been logged out.']);
     }
 
-    private function processShowTasks() {
+    private function processShowProducts() {
         if (!isset($_SESSION['is_valid_user'])) {
             $template = $this->twig->load('login.twig');
             echo $template->render(['login_message' => 'Log in to manage your tasks.']);
@@ -128,32 +146,6 @@ class Controller {
             $template = $this->twig->load('task_list.twig');
             echo $template->render(['errors' => $errors, 'tasks' => $tasks]);
         }
-    }
-
-    private function processAddTask() {
-        $new_task = filter_input(INPUT_POST, 'newtask', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $errors = array();
-        if (empty($new_task)) {
-            $errors[] = 'The new task cannot be empty.';
-        } else {
-            $this->db->addTask($_SESSION['username'], $new_task);
-        }
-        $tasks = $this->db->getTasksForUser($_SESSION['username']);
-        $template = $this->twig->load('task_list.twig');
-        echo $template->render(['errors' => $errors, 'tasks' => $tasks]);
-    }
-
-    private function processDeleteTask() {
-        $task_id = filter_input(INPUT_POST, 'taskid', FILTER_VALIDATE_INT);
-        $errors = array();
-        if ($task_id === NULL || $task_id === FALSE) {
-            $this->errors[] = 'The task cannot be deleted.';
-        } else {
-            $this->db->deleteTask($task_id);
-        }
-        $tasks = $this->db->getTasksForUser($_SESSION['username']);
-        $template = $this->twig->load('task_list.twig');
-        echo $template->render(['errors' => $errors, 'tasks' => $tasks]);
     }
 
     /**
@@ -191,7 +183,7 @@ class Controller {
      * Connects to the database
      */
     private function connectToDatabase() {
-        $this->db = new Database();
+        $this->db = new ButtercupDB();
         if (!$this->db->isConnected()) {
             $error_message = $this->db->getErrorMessage();
             $template = $this->twig->load('database_error.twig');
