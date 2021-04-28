@@ -1,4 +1,6 @@
 <?php
-require_once './util/Util.php';
-include './view/home.twig';
+require_once 'Controller.php';
+
+$controller = new Controller();
+$controller->invoke();
 ?>
