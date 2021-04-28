@@ -125,8 +125,13 @@ class Controller {
     }
 
     private function processShowBuild() {
-        $template = $this->twig->load('build.twig');
-        echo $template->render();
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('sign_in.twig');
+            echo $template->render(['login_message' => 'Log in to build your cup.']);
+        } else {
+            $template = $this->twig->load('build.twig');
+            echo $template->render();
+        }
     }
 
     private function processLogout() {
