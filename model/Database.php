@@ -7,7 +7,7 @@ class GuitarShopDB {
      * connect to the database
      */
     public function __construct() {
-        $dsn = 'mysql:host=localhost;dbname=my_guitar_shop1';
+        $dsn = 'mysql:host=localhost;dbname=butterCup';
         $username = 'mgs_user';
         $password = 'pa55word';
         $this->error_message = '';

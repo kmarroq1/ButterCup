@@ -5,7 +5,7 @@ class Util {
      * Gets the path
      ***************************************************************/
     public static function getProjectPath() {
-        return "/cs6252/lab7_kimberlymarroquin";
+        return "/cs6252/labFinal_kimberlymarroquin";
     }
     
     /****************************************************************
