@@ -68,19 +68,20 @@ class Controller {
      * ************************************************************* */
 
     private function processShowLogin() {
-        $template = $this->twig->load('login.twig');
-        echo $template->render(['login_message' => '']);
+        $template = $this->twig->load('sign_in.twig');
+        echo $template->render(['login_message' => '', 'user' => '']);
     }
 
     private function processLogin() {
-        $username = filter_input(INPUT_POST, 'username');
-        $password = filter_input(INPUT_POST, 'password');
+        $username = filter_input(INPUT_POST, 'login_username');
+        $password = filter_input(INPUT_POST, 'login_password');
         if ($this->db->isValidUserLogin($username, $password)) {
             $_SESSION['is_valid_user'] = true;
             $_SESSION['username'] = $username;
-            header("Location: .?action=Show Tasks");
+            $template = $this->twig->load('build.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
         } else {
-            $template = $this->twig->load('login.twig');
+            $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Invalid username or password']);
         }
     }
@@ -127,7 +128,7 @@ class Controller {
     private function processShowBuild() {
         if (!isset($_SESSION['is_valid_user'])) {
             $template = $this->twig->load('sign_in.twig');
-            echo $template->render(['login_message' => 'Log in to build your cup.']);
+            echo $template->render(['login_message' => 'Log in to build your cup']);
         } else {
             $template = $this->twig->load('build.twig');
             echo $template->render();

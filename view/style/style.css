@@ -78,15 +78,18 @@ img.logo {
 }
 .register-left input{
     border: none;
-    border-radius: 1.5rem;
-    padding: 2%;
     width: 60%;
     background: #e3fde5;
     font-weight: bold;
     color: #383d41;
-    margin-top: 30%;
+    margin-top: 10%;
     margin-bottom: 3%;
     cursor: pointer;
+}
+#login-button {
+    border-radius: 1.5rem;
+    padding: 2%;
+    margin-top: 20%;
 }
 .register-right{
     background: #f8f9fa;
