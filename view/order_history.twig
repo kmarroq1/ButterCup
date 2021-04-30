@@ -6,7 +6,7 @@
             {% for order in order_history %}
                 <tr>
                     <th>Order #: {{ order.orderID }}</th>
-                    <td>Cup ID: {{ order.cupID }}</td>
+                    <td>Your Unique Cup ID: {{ order.cupID }}</td>
                     <td>{{ order.orderedDate }}</td>
                 </tr>
             {% endfor %}

@@ -195,7 +195,7 @@ class Controller {
             //calculate price here
             //figure out which cup is recommended here and save into variable $new_cup
 
-            $new_cup = "1";
+            $new_cup = "cup1";
             $new_cup_id = $this->db->getCupID($new_cup);
             $_SESSION['newCupID'] = $new_cup_id;
             $username = $_SESSION['username'];
@@ -214,8 +214,7 @@ class Controller {
             $new_cup_id = $_SESSION['newCupID'];
             $date = date("m/d/Y");
             $this->db->addOrder($customer_id, $new_cup_id, $date);
-            $template = $this->twig->load('order_history.twig');
-            echo $template->render(['user' => 'Welcome ' . $username]);
+            $this->processShowOrders();
         }
     }
 

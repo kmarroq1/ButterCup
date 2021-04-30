@@ -143,7 +143,7 @@ class ButtercupDB {
         $statement->execute();
         $cup_id = $statement->fetch();
         $statement->closeCursor();
-        return $cup_id;
+        return $cup_id[0];
     }
 
     /**
