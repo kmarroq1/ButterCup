@@ -85,13 +85,12 @@ class Controller {
     }
 
     private function processLogin() {
-        $username = filter_input(INPUT_POST, 'login_username');
-        $password = filter_input(INPUT_POST, 'login_password');
+        $username = filter_input(INPUT_POST, 'login_username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, 'login_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($this->db->isValidUserLogin($username, $password)) {
             $_SESSION['is_valid_user'] = true;
             $_SESSION['username'] = $username;
-            $template = $this->twig->load('home.twig');
-            echo $template->render(['user' => 'Welcome ' . $username]);
+            header("Location: .?action=Home");
         } else {
             $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Invalid username or password']);
@@ -99,12 +98,12 @@ class Controller {
     }
 
     private function processRegistration() {
-        $username = filter_input(INPUT_POST, 'new_username');
-        $password = filter_input(INPUT_POST, 'new_password');
-        $first_name = filter_input(INPUT_POST, 'first_name');
-        $last_name = filter_input(INPUT_POST, 'last_name');
-        $email = filter_input(INPUT_POST, 'email');
-        $phone = filter_input(INPUT_POST, 'phone');
+        $username = filter_input(INPUT_POST, 'new_username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->validate->checkText('username', $username, true, 1, 30);
         $this->validate->checkText('password', $password, true, 6, 30);
@@ -183,8 +182,7 @@ class Controller {
     private function processLogout() {
         $_SESSION = array();   // Clear all session data from memory
         session_destroy();     // Clean up the session ID
-        $template = $this->twig->load('home.twig');
-        echo $template->render();
+        header("Location: .?action=Home");
     }
 
     private function processShowProducts() {
