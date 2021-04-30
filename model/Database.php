@@ -109,20 +109,20 @@ class ButtercupDB {
         $statement->execute();
         $user_id = $statement->fetch();
         $statement->closeCursor();
-        return $user_id;
+        return $user_id[0];
     }
 
     /**
      * Retrieves the order history for the specified user
      * 
      * @param string $user_id
-     * @return array - array of order history for the specified username
+     * @return array - array of order history for the specified user
      */
     public function getOrderHistory($user_id) {
         $query = 'SELECT * FROM order_history
-                  WHERE customerID = :user_id';
+                  WHERE customerID = :customer_id';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':user_id', $user_id);
+        $statement->bindValue(':customer_id', $user_id);
         $statement->execute();
         $orders = $statement->fetchAll();
         $statement->closeCursor();
@@ -133,7 +133,7 @@ class ButtercupDB {
      * Retrieves the customerID for the specified user
      * 
      * @param string $cup
-     * @return username
+     * @return cup_id
      */
     public function getCupID($cup) {
         $query = 'SELECT cupID FROM products

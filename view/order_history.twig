@@ -1,15 +1,17 @@
 {{ include('shared/header.twig') }}
-<main class="container">
-    <h2>Order History</h2>
-    <table class="table">
-        {% for order in order_history %}
-            <tr>
-                <th>{{ order.cupID }}</th>
-                <td>{{ order.orderedDate }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    <h3>{{ special }}</h3>
+<main class="container p-lg-5">
+    <div class="p-lg-5">
+        <h2>Order History</h2>
+        <table class="table">
+            {% for order in order_history %}
+                <tr>
+                    <th>Order #: {{ order.orderID }}</th>
+                    <td>Cup ID: {{ order.cupID }}</td>
+                    <td>{{ order.orderedDate }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </main>
 {{ include('shared/footer.twig') }}
 

@@ -225,7 +225,7 @@ class Controller {
             echo $template->render(['user' => '']);
         } else {
             $username = $_SESSION['username'];
-            $customer_id = $_SESSION['customerID'];
+            $customer_id = $this->db->getCustomerID($username);
             $order_history = $this->db->getOrderHistory($customer_id);
             $template = $this->twig->load('order_history.twig');
             echo $template->render(['user' => 'Welcome ' . $username, 'order_history' => $order_history]);
