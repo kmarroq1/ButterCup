@@ -48,7 +48,10 @@ class Controller {
             case 'Logout':
                 $this->processLogout();
                 break;
-            case 'Orders':
+            case 'Order':
+                $this->processAddProduct();
+                break;
+            case 'Order History':
                 $this->processShowOrders();
                 break;
             case 'Show Products':
@@ -118,13 +121,13 @@ class Controller {
                 'error_first_name' => $fields->getField('first_name')->getHTML(),
                 'error_last_name' => $fields->getField('last_name')->getHTML(),
                 'error_email' => $fields->getField('email')->getHTML(),
-                'error_phone' => $fields->getField('phone')->getHTML(), 
-                'new_username'=> $username,
-                'new_password'=> $password, 
-                'first_name'=> $first_name, 
-                'last_name'=> $last_name, 
-                'email'=> $email,
-                'phone'=> $phone]);
+                'error_phone' => $fields->getField('phone')->getHTML(),
+                'new_username' => $username,
+                'new_password' => $password,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'email' => $email,
+                'phone' => $phone]);
         } else {
             $this->db->addCustomer($username, $password, $first_name, $last_name, $email, $phone);
             $_SESSION['is_valid_user'] = true;
@@ -189,11 +192,30 @@ class Controller {
             $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Login to get your cup recommendation']);
         } else {
-            //calculate prices here
-            
+            //calculate price here
+            //figure out which cup is recommended here and save into variable $new_cup
+
+            $new_cup = "1";
+            $new_cup_id = $this->db->getCupID($new_cup);
+            $_SESSION['newCupID'] = $new_cup_id;
             $username = $_SESSION['username'];
             $template = $this->twig->load('default_product.twig');
             echo $template->render(['user' => 'Welcome ' . $username, 'price' => 40]);
+        }
+    }
+
+    private function processAddProduct() {
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('sign_in.twig');
+            echo $template->render(['login_message' => 'Login to get your cup recommendation']);
+        } else {
+            $username = $_SESSION['username'];
+            $customer_id = $this->db->getCustomerID($username);
+            $new_cup_id = $_SESSION['newCupID'];
+            $date = date("m/d/Y");
+            $this->db->addOrder($customer_id, $new_cup_id, $date);
+            $template = $this->twig->load('order_history.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
         }
     }
 
@@ -203,8 +225,10 @@ class Controller {
             echo $template->render(['user' => '']);
         } else {
             $username = $_SESSION['username'];
+            $customer_id = $_SESSION['customerID'];
+            $order_history = $this->db->getOrderHistory($customer_id);
             $template = $this->twig->load('order_history.twig');
-            echo $template->render(['user' => 'Welcome ' . $username]);
+            echo $template->render(['user' => 'Welcome ' . $username, 'order_history' => $order_history]);
         }
     }
 

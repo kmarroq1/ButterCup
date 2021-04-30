@@ -1,4 +1,15 @@
 {{ include('shared/header.twig') }}
-
+<main class="container">
+    <h2>Order History</h2>
+    <table class="table">
+        {% for order in order_history %}
+            <tr>
+                <th>{{ order.cupID }}</th>
+                <td>{{ order.orderedDate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>{{ special }}</h3>
+</main>
 {{ include('shared/footer.twig') }}
 

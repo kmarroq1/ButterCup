@@ -96,20 +96,72 @@ class ButtercupDB {
     }
 
     /**
-     * Retrieves the username for the specified user
+     * Retrieves the customerID for the specified user
      * 
      * @param string $username
-     * @return array - array of tasks for the specified username
+     * @return username
      */
-    public function getUsername($username) {
-        $query = 'SELECT username FROM customers
+    public function getCustomerID($username) {
+        $query = 'SELECT customerID FROM customers
                   WHERE username = :username';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':username', $username);
         $statement->execute();
-        $user = $statement->fetch();
+        $user_id = $statement->fetch();
         $statement->closeCursor();
-        return $user;
+        return $user_id;
+    }
+
+    /**
+     * Retrieves the order history for the specified user
+     * 
+     * @param string $user_id
+     * @return array - array of order history for the specified username
+     */
+    public function getOrderHistory($user_id) {
+        $query = 'SELECT * FROM order_history
+                  WHERE customerID = :user_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':user_id', $user_id);
+        $statement->execute();
+        $orders = $statement->fetchAll();
+        $statement->closeCursor();
+        return $orders;
+    }
+
+    /**
+     * Retrieves the customerID for the specified user
+     * 
+     * @param string $cup
+     * @return username
+     */
+    public function getCupID($cup) {
+        $query = 'SELECT cupID FROM products
+                  WHERE cup_option = :cup_option';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':cup_option', $cup);
+        $statement->execute();
+        $cup_id = $statement->fetch();
+        $statement->closeCursor();
+        return $cup_id;
+    }
+
+    /**
+     * Adds the specified user to the table users
+     * 
+     * @param type $customer_id
+     * @param type $cup_id
+     * @param type $date
+     */
+    public function addOrder($customer_id, $cup_id, $date) {
+        $query = 'INSERT INTO order_history (customerId, cupId, orderedDate)
+              VALUES (:customer_id, :cup_id, :date)';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':customer_id', $customer_id);
+        $statement->bindValue(':cup_id', $cup_id);
+        $statement->bindValue(':date', $date);
+        $statement->execute();
+        $statement->closeCursor();
     }
 
 }
