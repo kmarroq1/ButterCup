@@ -3,13 +3,17 @@
     <div class="p-lg-5 py-3">
         <h2>Order History</h2>
         <table class="table">
-            {% for order in order_history %}
-                <tr>
-                    <th>Order #: {{ order.orderID }}</th>
-                    <td>Your Unique Cup ID: {{ order.cupID }}</td>
-                    <td>{{ order.orderedDate }}</td>
-                </tr>
-            {% endfor %}
+            {% if order_history is empty %}
+                <p>No orders have been placed</p>
+            {% else %}
+                {% for order in order_history %}
+                    <tr>
+                        <th>Order #: {{ order.orderID }}</th>
+                        <td>Your Unique Cup ID: {{ order.cupID }}</td>
+                        <td>{{ order.orderedDate }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </table>
     </div>
 </main>

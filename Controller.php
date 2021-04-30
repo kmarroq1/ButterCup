@@ -187,9 +187,9 @@ class Controller {
 
     private function processShowProducts() {
         $flow = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $cervix = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $color = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $string = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cervix = filter_input(INPUT_POST, 'cervix', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $string = filter_input(INPUT_POST, 'string', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         //calculate price here
         //figure out which cup is recommended here and save into variable $new_cup
