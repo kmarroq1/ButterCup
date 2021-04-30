@@ -63,7 +63,7 @@ class Validator {
         // Check field and set or clear error message
         $match = preg_match($pattern, $value);
         if ($match === false) {
-            $field->setErrorMessage('Error testing field.');
+            $field->setErrorMessage('Error testing field');
         } else if ($match != 1) {
             $field->setErrorMessage($message);
         } else {
@@ -82,7 +82,7 @@ class Validator {
 
         // Call the pattern method to validate a phone number
         $pattern = '/^[[:digit:]]{3}-[[:digit:]]{3}-[[:digit:]]{4}$/';
-        $message = 'Invalid phone number.';
+        $message = 'Invalid phone number';
         $this->checkPattern($name, $value, $pattern, $message, $required);
     }
 
@@ -104,11 +104,11 @@ class Validator {
         // Split email address on @ sign and check parts
         $parts = explode('@', $value);
         if (count($parts) < 2) {
-            $field->setErrorMessage('At sign required.');
+            $field->setErrorMessage('At sign required');
             return;
         }
         if (count($parts) > 2) {
-            $field->setErrorMessage('Only one at sign allowed.');
+            $field->setErrorMessage('Only one at sign allowed');
             return;
         }
         $local = $parts[0];
@@ -116,11 +116,11 @@ class Validator {
 
         // Check lengths of local and domain parts
         if (strlen($local) > 64) {
-            $field->setErrorMessage('Username part too long.');
+            $field->setErrorMessage('Username part too long');
             return;
         }
         if (strlen($domain) > 255) {
-            $field->setErrorMessage('Domain name part too long.');
+            $field->setErrorMessage('Domain name part too long');
             return;
         }
 
@@ -140,7 +140,7 @@ class Validator {
 
         // Call the pattern method and exit if it yields an error
         $this->checkPattern($name, $local, $localPattern,
-                'Invalid username part.');
+                'Invalid username part');
         if ($field->hasError()) {
             return;
         }
@@ -153,7 +153,7 @@ class Validator {
 
         // Call the pattern method
         $this->checkPattern($name, $domain, $domainPattern,
-                'Invalid domain name part.');
+                'Invalid domain name part');
     }
 
 }
