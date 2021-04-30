@@ -33,9 +33,6 @@ class Controller {
             case 'Login':
                 $this->processLogin();
                 break;
-            case 'Show Registration':
-                $this->processShowRegistration();
-                break;
             case 'Register':
                 $this->processRegistration();
                 break;
@@ -78,17 +75,12 @@ class Controller {
         if ($this->db->isValidUserLogin($username, $password)) {
             $_SESSION['is_valid_user'] = true;
             $_SESSION['username'] = $username;
-            $template = $this->twig->load('build.twig');
+            $template = $this->twig->load('home.twig');
             echo $template->render(['user' => 'Welcome ' . $username]);
         } else {
             $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Invalid username or password']);
         }
-    }
-
-    private function processShowRegistration() {
-        $template = $this->twig->load('registration.twig');
-        echo $template->render(['error_username' => '', 'error_password' => '']);
     }
 
     private function processRegistration() {
@@ -111,34 +103,53 @@ class Controller {
     }
 
     private function processShowHomePage() {
-        $template = $this->twig->load('home.twig');
-        echo $template->render();
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('home.twig');
+            echo $template->render(['user' => '']);
+        } else {
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('home.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
+        }
     }
 
     private function processShowFAQ() {
-        $template = $this->twig->load('faq.twig');
-        echo $template->render();
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('faq.twig');
+            echo $template->render(['user' => '']);
+        } else {
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('faq.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
+        }
     }
 
     private function processShowServices() {
-        $template = $this->twig->load('services.twig');
-        echo $template->render();
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('services.twig');
+            echo $template->render(['user' => '']);
+        } else {
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('services.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
+        }
     }
 
     private function processShowBuild() {
         if (!isset($_SESSION['is_valid_user'])) {
-            $template = $this->twig->load('sign_in.twig');
-            echo $template->render(['login_message' => 'Log in to build your cup']);
-        } else {
             $template = $this->twig->load('build.twig');
-            echo $template->render();
+            echo $template->render(['user' => '']);
+        } else {
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('build.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
         }
     }
 
     private function processLogout() {
         $_SESSION = array();   // Clear all session data from memory
         session_destroy();     // Clean up the session ID
-        $template = $this->twig->load('login.twig');
+        $template = $this->twig->load('home.twig');
         echo $template->render(['login_message' => 'You have been logged out.']);
     }
 

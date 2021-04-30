@@ -18,7 +18,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div id="navbarCollapse" class="collapse navbar-collapse">
-
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href=".?action=FAQ">FAQ
@@ -30,12 +29,22 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href=".?action=Build">Build
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
                     </ul>
-                    <h3>{{ user|e }} &nbsp </h3>
-                    <a class="nav-link" href=".?action=Build">Build
-                        <span class="sr-only">(current)</span>
-                    </a>
-
+                    {% if session.is_valid_user is empty %}
+                        <a class="nav-link" href=".?action=Show Login">Sign Up/In
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    {% else %}
+                        <h3>{{ user|e }} &nbsp </h3>
+                        <a class="nav-link" href=".?action=Logout">Logout
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    {% endif %}
                 </div>
             </nav>
         </header>

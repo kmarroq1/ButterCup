@@ -38,6 +38,23 @@ class ButtercupDB {
     }
 
     /**
+     * Checks if the specified username is in this database
+     * 
+     * @param string $username
+     * @return boolean - true if username is in this database
+     */
+    public function isValidUser($username) {
+        $query = 'SELECT * FROM customers
+              WHERE username = :username';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        return !($row === false);
+    }
+
+    /**
      * Checks the login credentials
      * 
      * @param type $username
@@ -55,6 +72,23 @@ class ButtercupDB {
         $statement->closeCursor();
         $hash = $row['password'];
         return password_verify($password, $hash);
+    }
+
+    /**
+     * Retrieves the username for the specified user
+     * 
+     * @param string $username
+     * @return array - array of tasks for the specified username
+     */
+    public function getUsername($username) {
+        $query = 'SELECT username FROM customers
+                  WHERE username = :username';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username);
+        $statement->execute();
+        $user = $statement->fetch();
+        $statement->closeCursor();
+        return $user;
     }
 
 }
