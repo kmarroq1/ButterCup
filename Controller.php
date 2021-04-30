@@ -186,13 +186,22 @@ class Controller {
     }
 
     private function processShowProducts() {
-        if (!isset($_SESSION['is_valid_user'])) {
+        $flow = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cervix = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $color = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $string = filter_input(INPUT_POST, 'flow', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        //calculate price here
+        //figure out which cup is recommended here and save into variable $new_cup
+
+
+        if (empty($flow) || $flow == NULL || empty($cervix) || $cervix == NULL || empty($color) || $color == NULL || empty($string) || $string == NULL) {
+            $template = $this->twig->load('build.twig');
+            echo $template->render(['invalid' => 'Required field']);
+        } else if (!isset($_SESSION['is_valid_user'])) {
             $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Login to get your cup recommendation']);
         } else {
-            //calculate price here
-            //figure out which cup is recommended here and save into variable $new_cup
-
             $new_cup = "cup1";
             $new_cup_id = $this->db->getCupID($new_cup);
             $_SESSION['newCupID'] = $new_cup_id;

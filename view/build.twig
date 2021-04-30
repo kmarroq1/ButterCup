@@ -11,28 +11,28 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="flow">Flow</label>
-                    <select class="custom-select d-block w-100" id="flow" required="">
+                    <select class="custom-select d-block w-100" id="flow" name="flow">
                         <option value="">Choose...</option>
                         <option>Light</option>
                         <option>Regular</option>
                         <option>Heavy</option>
                         <option>Very Heavy</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Please provide a valid flow.
+                    <div class="empty_field">
+                        {{ invalid|e }}
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="cervix">Cervical Length</label>
-                    <select class="custom-select d-block w-100" id="cervix" required="">
+                    <select class="custom-select d-block w-100" id="cervix" name="cervix">
                         <option value="">Choose...</option>
                         <option>Extra Short</option>
                         <option>Short</option>
                         <option>Average</option>
                         <option>Long</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Please provide a valid cervical length.
+                    <div class="empty_field">
+                        {{ invalid|e }}
                     </div>
                 </div>
             </div>
@@ -44,21 +44,21 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="color"> Cup Color</label>
-                    <select class="custom-select d-block w-100" id="color" required="">
+                    <select class="custom-select d-block w-100" id="color" name="color">
                         <option value="">Choose...</option>
                         <option>Pink</option>
                         <option>Red</option>
                         <option>Green</option>
                         <option>Blue</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Please select a valid color.
+                    <div class="empty_field">
+                        {{ invalid|e }}
                     </div>
                 </div>
 
                 <div class="form-group col-md-4 mb-3">
                     <label for="string">String Design</label>
-                    <select class="form-control" id="string" required="">
+                    <select class="form-control" id="string" name="string">
                         <option value="">Choose...</option>
                         <option>Long heart</option>
                         <option>Short heart</option>
@@ -66,25 +66,25 @@
                         <option>Short loop</option>
                         <option>Plain string</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Please select a valid string design.
+                    <div class="empty_field">
+                        {{ invalid|e }}
                     </div>
                 </div>
             </div>
 
             <div class="d-block my-3">
                 <div class="custom-control custom-radio">
-                    <input id="noPattern" name="pattern" type="radio" class="custom-control-input" checked="" required="">
+                    <input id="noPattern" name="pattern" type="radio" class="custom-control-input" checked="">
                     <label class="custom-control-label" for="noPattern">None</label>
                 </div>
 
                 <div class="custom-control custom-radio">
-                    <input id="polkaDots" name="pattern" type="radio" class="custom-control-input" checked="" required="">
+                    <input id="polkaDots" name="pattern" type="radio" class="custom-control-input">
                     <label class="custom-control-label" for="polkaDots">Polka-Dots</label>
                 </div>
 
                 <div class="custom-control custom-radio">
-                    <input id="stripes" name="pattern" type="radio" class="custom-control-input" checked="" required="">
+                    <input id="stripes" name="pattern" type="radio" class="custom-control-input">
                     <label class="custom-control-label" for="stripes">Stripes</label>
                 </div>
             </div>
@@ -97,13 +97,6 @@
             </div>
 
             <hr class="mb-4">
-
-            <div id="price-result" class="display-none text-center text-muted p-lg-5">
-                <h3>Total (USD): </h3>
-                &nbsp;
-                <h3 id="total-value">""
-                </h3>
-            </div>
 
             <button class="btn btn-primary btn-lg btn-block" type="submit" name="action" value="Show Products">Click to get a cup recommendation</button>
         </form>

@@ -243,3 +243,6 @@ li {
         width:100% !important;
     }
 }
+.empty_field {
+    color: #ff0000;
+}
