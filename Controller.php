@@ -189,15 +189,17 @@ class Controller {
             $template = $this->twig->load('sign_in.twig');
             echo $template->render(['login_message' => 'Login to get your cup recommendation']);
         } else {
+            //calculate prices here
+            
             $username = $_SESSION['username'];
             $template = $this->twig->load('default_product.twig');
-            echo $template->render(['user' => 'Welcome ' . $username]);
+            echo $template->render(['user' => 'Welcome ' . $username, 'price' => 40]);
         }
     }
 
     private function processShowOrders() {
         if (!isset($_SESSION['is_valid_user'])) {
-            $template = $this->twig->load('order_history.twig');
+            $template = $this->twig->load('sign_in.twig');
             echo $template->render(['user' => '']);
         } else {
             $username = $_SESSION['username'];
