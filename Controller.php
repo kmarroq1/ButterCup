@@ -20,6 +20,15 @@ class Controller {
         $this->twig = new Twig\Environment($loader);
         $this->twig->addGlobal('session', $_SESSION);
         $this->action = $this->getAction();
+
+        $this->validate = new Validator();
+        $fields = $this->validate->getFields();
+        $fields->addField('username');
+        $fields->addField('password');
+        $fields->addField('first_name');
+        $fields->addField('last_name');
+        $fields->addField('email');
+        $fields->addField('phone');
     }
 
     /**
@@ -38,6 +47,9 @@ class Controller {
                 break;
             case 'Logout':
                 $this->processLogout();
+                break;
+            case 'Orders':
+                $this->processShowOrders();
                 break;
             case 'Show Products':
                 $this->processShowProducts();
@@ -84,21 +96,40 @@ class Controller {
     }
 
     private function processRegistration() {
-        $username = filter_input(INPUT_POST, 'username');
-        $password = filter_input(INPUT_POST, 'password');
+        $username = filter_input(INPUT_POST, 'new_username');
+        $password = filter_input(INPUT_POST, 'new_password');
+        $first_name = filter_input(INPUT_POST, 'first_name');
+        $last_name = filter_input(INPUT_POST, 'last_name');
+        $email = filter_input(INPUT_POST, 'email');
+        $phone = filter_input(INPUT_POST, 'phone');
 
-        $validator = new Validator($this->db);
-        $error_username = $validator->validateUsername($username);
-        $error_password = $validator->validatePassword($password);
+        $this->validate->checkText('username', $username, true, 1, 30);
+        $this->validate->checkText('password', $password, true, 6, 30);
+        $this->validate->checkText('first_name', $first_name, true, 1, 30);
+        $this->validate->checkText('last_name', $last_name, true, 1, 30);
+        $this->validate->checkEmail('email', $email, true);
+        $this->validate->checkPhone('phone', $phone);
 
-        if (!empty($error_username) || !empty($error_password)) {
-            $template = $this->twig->load('registration.twig');
-            echo $template->render(['error_username' => $error_username, 'error_password' => $error_password]);
+        if ($this->validate->foundErrors()) {
+            $fields = $this->validate->getFields();
+            $template = $this->twig->load('sign_in.twig');
+            echo $template->render(['error_username' => $fields->getField('username')->getHTML(),
+                'error_password' => $fields->getField('password')->getHTML(),
+                'error_first_name' => $fields->getField('first_name')->getHTML(),
+                'error_last_name' => $fields->getField('last_name')->getHTML(),
+                'error_email' => $fields->getField('email')->getHTML(),
+                'error_phone' => $fields->getField('phone')->getHTML(), 
+                'new_username'=> $username,
+                'new_password'=> $password, 
+                'first_name'=> $first_name, 
+                'last_name'=> $last_name, 
+                'email'=> $email,
+                'phone'=> $phone]);
         } else {
-            $this->db->addUser($username, $password);
+            $this->db->addCustomer($username, $password, $first_name, $last_name, $email, $phone);
             $_SESSION['is_valid_user'] = true;
             $_SESSION['username'] = $username;
-            header("Location: .?action=Show Tasks");
+            header("Location: .?action=Home");
         }
     }
 
@@ -150,7 +181,7 @@ class Controller {
         $_SESSION = array();   // Clear all session data from memory
         session_destroy();     // Clean up the session ID
         $template = $this->twig->load('home.twig');
-        echo $template->render(['login_message' => 'You have been logged out.']);
+        echo $template->render();
     }
 
     private function processShowProducts() {
@@ -162,6 +193,17 @@ class Controller {
             $tasks = $this->db->getTasksForUser($_SESSION['username']);
             $template = $this->twig->load('task_list.twig');
             echo $template->render(['errors' => $errors, 'tasks' => $tasks]);
+        }
+    }
+
+    private function processShowOrders() {
+        if (!isset($_SESSION['is_valid_user'])) {
+            $template = $this->twig->load('order_history.twig');
+            echo $template->render(['user' => '']);
+        } else {
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('order_history.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
         }
     }
 

@@ -55,6 +55,27 @@ class ButtercupDB {
     }
 
     /**
+     * Adds the specified user to the table users
+     * 
+     * @param type $username
+     * @param type $password
+     */
+    public function addCustomer($username, $password, $first_name, $last_name, $email, $phone) {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $query = 'INSERT INTO customers (username, password, firstName, lastName, email, phone)
+              VALUES (:username, :password, :firstName, :lastName, :email, :phone)';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username);
+        $statement->bindValue(':password', $hash);
+        $statement->bindValue(':firstName', $first_name);
+        $statement->bindValue(':lastName', $last_name);
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':phone', $phone);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+
+    /**
      * Checks the login credentials
      * 
      * @param type $username

@@ -35,12 +35,16 @@
                             </a>
                         </li>
                     </ul>
+
                     {% if session.is_valid_user is empty %}
                         <a class="nav-link" href=".?action=Show Login">Sign Up/In
                             <span class="sr-only">(current)</span>
                         </a>
                     {% else %}
-                        <h3>{{ user|e }} &nbsp </h3>
+                        <h5>{{ user|e }} &nbsp </h5>
+                        <a class="mav-item active nav-link" href=".?action=Orders">Order History
+                            <span class="sr-only">(current)</span>
+                        </a>
                         <a class="nav-link" href=".?action=Logout">Logout
                             <span class="sr-only">(current)</span>
                         </a>

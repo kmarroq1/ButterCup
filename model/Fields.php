@@ -1,5 +1,7 @@
 <?php
+
 class Field {
+
     private $name;
     private $message = '';
     private $hasError = false;
@@ -8,14 +10,24 @@ class Field {
         $this->name = $name;
         $this->message = $message;
     }
-    public function getName()    { return $this->name; }
-    public function getMessage() { return $this->message; }
-    public function hasError()    { return $this->hasError; }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getMessage() {
+        return $this->message;
+    }
+
+    public function hasError() {
+        return $this->hasError;
+    }
 
     public function setErrorMessage($message) {
         $this->message = $message;
         $this->hasError = true;
     }
+
     public function clearErrorMessage() {
         $this->message = '';
         $this->hasError = false;
@@ -24,14 +36,16 @@ class Field {
     public function getHTML() {
         $message = htmlspecialchars($this->message);
         if ($this->hasError()) {
-            return '<span class="error">' . $message . '</span>';
+            return $message;
         } else {
-            return '<span>' . $message . '</span>';
+            return $message;
         }
     }
+
 }
 
 class Fields {
+
     private $fields = array();
 
     public function addField($name, $message = '') {
@@ -45,9 +59,13 @@ class Fields {
 
     public function hasErrors() {
         foreach ($this->fields as $field) {
-            if ($field->hasError()) { return true; }
+            if ($field->hasError()) {
+                return true;
+            }
         }
         return false;
     }
+
 }
+
 ?>
