@@ -186,13 +186,12 @@ class Controller {
 
     private function processShowProducts() {
         if (!isset($_SESSION['is_valid_user'])) {
-            $template = $this->twig->load('login.twig');
-            echo $template->render(['login_message' => 'Log in to manage your tasks.']);
+            $template = $this->twig->load('sign_in.twig');
+            echo $template->render(['login_message' => 'Login to get your cup recommendation']);
         } else {
-            $errors = array();
-            $tasks = $this->db->getTasksForUser($_SESSION['username']);
-            $template = $this->twig->load('task_list.twig');
-            echo $template->render(['errors' => $errors, 'tasks' => $tasks]);
+            $username = $_SESSION['username'];
+            $template = $this->twig->load('default_product.twig');
+            echo $template->render(['user' => 'Welcome ' . $username]);
         }
     }
 

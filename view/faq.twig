@@ -1,53 +1,79 @@
 {{ include('shared/header.twig') }}
 
-        <main class="container p-lg-5">
-            <h1 class="text-center p-lg-5">Frequently Asked Questions</h1>
+<main class="container p-lg-5">
+    <h1 class="text-center p-lg-5">Frequently Asked Questions</h1>
 
-            <div id="accordion">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Inserting ButterCup
-                            </button>
-                        </h5>
-                    </div>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Inserting ButterCup
+                    </button>
+                </h5>
+            </div>
 
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                            Accurate information about inserting a menstrual cup.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Removing ButterCup
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            Accurate information about removing a menstrual cup.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Cleaning ButterCup
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-                            Boil for 5 minutes before each cycle. Wash with fragance-free soap in between usage.
-                        </div>
-                    </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    Accurate information about inserting a menstrual cup.
                 </div>
             </div>
-        </main>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Removing ButterCup
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    Accurate information about removing a menstrual cup.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Cleaning ButterCup
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    Boil for 5 minutes before each cycle. Wash with fragance-free soap in between usage.
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <h1 class="text-center">How to build your cup</h1>
+    <div class="card-deck p-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">1. Sizing</h5>
+                <p class="card-text">There are four volumes available depending on how heavy your flow is. Here are some facts about the average milliliters of flow most people get. Here is how much each cup size holds. Additionally, ButterCup comes in four different
+                    lengths depending on your cervix height, which changes during your cycle. Some relevant info here.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">2. String</h5>
+                <p class="card-text">There are four string styles you can choose from based on your preference. There are three lengths: short, plain(average), long. There are also three styles you can implement on the end of your string that can make it easier to remove:
+                    loop, heart loop, and just a plain string with no loop.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">3. Color</h5>
+                <p class="card-text">You can choose from a wide range of colors, free of charge! You can choose a pattern to overlay over the cup for an additional $5 on the base $35. All cups are made with silicon and are safe to use for up to 12 hours with no harm to
+                    you, while maintaining the integrity of its design.</p>
+            </div>
+        </div>
+    </div>
+</main>
 
 {{ include('shared/footer.twig') }}

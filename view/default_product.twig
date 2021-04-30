@@ -1,0 +1,36 @@
+{{ include('shared/header.twig') }}
+<div class="container p-lg-5 py-4 my-4 mx-auto d-flex flex-column">
+    <div class="header">
+        <div class="row r1">
+            <div class="col-md-9 abc">
+                <br>
+                <h1>Cup Recommendation</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-body mt-4">
+        <div class="row r3">
+            <div class="col-md-5 p-0 klo">
+                <ul>
+                    <li>Cup #1</li>
+                    <li>Easy to Clean</li>
+                    <li>100% Quality</li>
+                    <li>Free Shipping</li>
+                    <li>Easy Returns</li>
+                    <li>12 Months Warranty</li>
+                </ul>
+            </div>
+            <div class="col-md-7"> <img src="view/images/main-page-cup.png" width="40%" height="50%"> </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column mt-5">
+        <div class="row r4">
+            <div class="col-md-2 myt des"><a href="#">Description</a></div>
+            <div class="col-md-2 myt "><a href="#">Review</a></div>
+            <div class="col-md-2 mio offset-md-4">Total: ${{ price|e }}</div>
+            <div class="col-md-2 myt "><button type="button" class="btn btn-outline-warning" type="submit" name="action" value="Orders">BUY NOW</button></div>
+        </div>
+    </div>
+</div>
+{{ include('shared/footer.twig') }}
+
